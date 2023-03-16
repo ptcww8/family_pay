@@ -1,0 +1,95 @@
+<% @title = "Data for #{@performance.sunday_service.strftime("%A, %b %d %Y")}" %>
+
+<div class="container">
+  <div class="row">
+    <div class="col-12 col-md-9">
+      <div class="card">
+        <div class="card-body">
+          <div class="form-horizontal showprofile">
+                       <div class="form-group row">
+                <label class="col-12 col-md-12 form-label">Type of Service: </label>
+                <div class="col-12 col-md-9">
+                  <span>
+                    <%= Performance::SERVICE_TYPES.key(@performance.service_type.to_s) %>
+                  </span>
+                </div>
+              </div>
+						
+						
+                          <div class="form-group row">
+                <label class="col-12 col-md-12 form-label">Which treasurers came to church?</label>
+                <div class="col-12 col-md-9">
+                  <span>
+                    <%= Treasurer.where(id: @performance.who_came.map(&:to_i)).map{|tres| tres.full_name}.join(", ") %>
+                  </span>
+                </div>
+              </div>
+
+                          <div class="form-group row">
+                <label class="col-12 col-md-12 form-label">Which treasurers counted?</label>
+                <div class="col-12 col-md-10">
+                  <span>
+                    <%= Treasurer.where(id: @performance.who_counted.map(&:to_i)).map{|tres| tres.full_name}.join(", ") %>
+                  </span>
+                </div>
+              </div>
+
+             <div class="form-group row">
+                <label class="col-12 col-md-12 form-label">How long after church did counting start?</label>
+                <div class="col-12 col-md-10">
+                  <span>
+                    <%= Performance::WHEN_COUNTED.key(@performance.when_counted) %>
+                  </span>
+                </div>
+              </div>
+
+            <div class="form-group row">
+                <label class="col-12 col-md-12 form-label">When was it paid into the bank?</label>
+                <div class="col-12 col-md-8">
+                  <span>
+                    <%= Performance::WHEN_PAID.key(@performance.when_paid) %>
+                  </span>
+                </div>
+              </div>
+
+            <div class="form-group row">
+                <label class="col-12 col-md-4 form-label">Who paid to the bank?</label>
+                <div class="col-12 col-md-8">
+                  <span>
+                    <%= Treasurer.find_by_id(@performance.who_paid).full_name if @performance.who_paid.present? %>
+                  </span>
+                </div>
+              </div>
+
+            <div class="form-group row">
+                <label class="col-12 col-md-4 form-label">Form Completed By</label>
+                <div class="col-12 col-md-8">
+                  <span>
+                    <%= User.find_by_id(@performance.completed_by).treasurer.full_name %>
+                  </span>
+                </div>
+              </div>
+	
+						 <div class="form-group row">
+                <label class="col-12 col-md-4 form-label">Deposit Date</label>
+                <div class="col-12 col-md-8">
+                  <span>
+                    <%= @performance.deposit_date.strftime("%A, %b %d %Y") if @performance.deposit_date.present? %>
+                  </span>
+                </div>
+              </div>
+						
+						
+						
+                        <div class="d-flex">
+              <div class="ml-auto">
+                <%= link_to fa_icon_tag("pencil") + ' Edit', edit_performance_path(@performance), class: 'btn btn-primary' %>
+                <%= link_to 'Back', performances_path, class: 'btn' %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<%= html_tag :lang => "en" do %>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title><%= [@title, app_name].compact.join(" - ") %></title>
+
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag "application", media: "all"%>
+    <%= yield :styles %>
+		<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+
+
+    <%= favicon_link_tag %>
+    <%# favicon_link_tag "apple-touch-icon.png", :rel => "apple-touch-icon" %>
+
+    <%= render 'layouts/external_js_libs' %>
+    <%= yield :external_js_libs %>
+    <%= javascript_include_tag "application" %>
+		<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+		<script src="https://unpkg.com/bootstrap-show-password@1.2.1/dist/bootstrap-show-password.min.js"></script>
+
+    <%= yield :javascript %>
+    <%= yield :head %>
+  </head>
+  <body class='<%= @body_class %>' data-js-libs='bootstrap fitie metis forms sidenav prism bs-switch <%= yield :js_libs %>'>
+
+    <%= yield %>
+
+  </body>
+<% end %>

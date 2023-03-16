@@ -1,0 +1,264 @@
+<% @title = "#{@treasurer.first_name} #{@treasurer.last_name} (#{@treasurer.branch_id})" %>
+
+<div class="container">
+	
+		<div class="row">
+			<div class="col-12 col-md-8">
+				<%= link_to @treasurer.user && @treasurer.user.treasurer? ? "Make Principal Treasurer" : "Remove Principal Treasurer Role", make_principal_treasurer_path, class:"btn pull-right mb-3 #{@treasurer.verified ? 'bg-warning' : 'bg-success'} #{@treasurer.verified ?  'verify_btn' : ''}" if current_user.admin? %> <br>
+				</h3>
+			</div>
+</div>
+
+<div class="modal fade" id="verifyform" tabindex="-1" role="dialog" aria-labelledby="PayForCredits" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body" style="overflow:auto">
+         <div class='col-12 col-md-12'>
+				<%= form_with url: update_comments_path, local: true, html: { class: 'form-horizontal' } do |f| %>
+  				<%= f.error_notification %>
+
+						<div class="form-inputs">
+							<%= f.form_group :comments, class: 'row' do |f| %>
+								<%= f.label :comments, class: 'control-label col-md-12' %>
+								<div class='col-12 col-md-12'>
+									<%= text_area_tag "comments",@treasurer.comments, class: 'form-control', rows:"10" %>
+									<%= f.error_messages %>
+								</div>
+							<% end %>
+						</div>
+						<div class="d-flex">
+							<div class="ml-auto">
+								<%= f.submit "Request More Information", class: 'btn btn-warning' %>
+								<%= link_to "Cancel", "#", "data-dismiss":"modal", class: 'btn btn-outline-default' %>
+							</div>
+						</div>
+					 <% end %>
+      </div>       
+      </div>
+    </div>
+  </div>
+</div>
+	
+  <div class="row">
+		<div class="col-12 col-md-4">
+			<%= image_tag @treasurer.image_resized, width: '100%', class:"card-img-top", alt:"#{@treasurer.first_name} #{@treasurer.last_name}" if @treasurer.image.attached? %>
+			<br>
+			Comments:
+			<p>
+				<%= @treasurer.comments if @treasurer.comments.present?%>
+			</p>
+			
+		</div>
+    <div class="col-12 col-md-8">
+							<h3 class= "text-center <%=@treasurer.verified ? 'text-success' : 'text-danger' %>">
+					<%= @treasurer.verified ? "This Information has been verified" : "This Information has not been verified yet by a Principal Treasurer" %>
+				</h3>
+      <div class="card">
+        <div class="card-body showprofile">
+             <div class="form-group row">
+                <label class="col-12 col-md-12 form-label">First name: 
+									<span>
+                    <%= @treasurer.first_name %>
+                  </span>
+							 </label>
+                  
+              </div>
+
+              <div class="form-group row">
+                <label class="col-12 col-md-12 form-label">Middle name: 
+									<span>
+                    <%= @treasurer.middle_name %>
+                  </span>
+								</label>
+              </div>
+
+             <div class="form-group row">
+                <label class="col-12 col-md-12 form-label">Last name:
+									<span>
+                    <%= @treasurer.last_name %>
+                  </span>
+							 </label>
+              </div>
+
+					
+             <div class="form-group row">
+                <label class="col-12 col-md-12 form-label">Email Address:
+									<span>
+                    <%= @treasurer.user.email if @treasurer.user %>
+                  </span>
+							 </label>
+              </div>
+					
+					
+                          <div class="form-group row">
+                <label class="col-12 col-md-12 form-label">Date of birth:
+                  <span>
+                    <%= @treasurer.date_of_birth.strftime('%A, %d %B, %Y') %>
+                  </span>
+                </label>
+              </div>
+
+                          <div class="form-group row">
+                <label class="col-12 col-md-12 form-label">Branch:
+                  <span>
+                    <%= @treasurer.branch_id %>
+                  </span>
+                </label>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-12 col-md-12 form-label">Council:
+                  <span>
+                    <%= @treasurer.council %>
+                  </span>
+                </label>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-12 col-md-12 form-label">Phone number
+                  <span>
+                    <%= @treasurer.phone_number %>
+                  </span>
+                </label>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-12 col-md-12 form-label">Whatsapp number
+                  <span>
+                    <%= @treasurer.whatsapp_number %>
+                  </span>
+                </label>
+              </div>
+
+                          <div class="form-group row">
+                <label class="col-12 col-md-12 form-label">Are You Currently Employed?
+                  <span>
+                    <%= @treasurer.employment_status ? "Yes" : "No" %>
+                  </span>
+                </label>
+              </div>
+
+                          <div class="form-group row">
+                <label class="col-12 col-md-12 form-label">Education level:
+                  <span>
+                    <%= @treasurer.education_level %>
+                  </span>
+                </label>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-12 col-md-12 form-label">Are you born again?
+                  <span>
+                    <%= @treasurer.born_again ? "Yes" : "No" %>
+                  </span>
+                </label>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-12 col-md-12 form-label">Have you been baptised by immersion ?
+                  <span>
+                    <%= @treasurer.baptism ? "Yes" : "No" %>
+                  </span>
+                </label>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-12 col-md-12 form-label">Do you have the Holy Ghost Baptism with the evidence of speaking in tongues?
+                  <span>
+                    <%= @treasurer.holy_ghost ? "Yes" : "No" %>
+                  </span>
+                </label>
+              </div>
+              <div class="form-group row">
+                <label class="col-12 col-md-12 form-label">Do you have your quiet time?
+                  <span>
+                    <%= @treasurer.quiet_time ? "Yes" : "No" %>
+                  </span>
+                </label>
+              </div>
+					
+              <div class="form-group row">
+                <label class="col-12 col-md-12 form-label">When Did you join the UD?
+                  <span>
+                    <%= @treasurer.ud_join.year %>
+                  </span>
+                </label>
+              </div>
+
+                          <div class="form-group row">
+                <label class="col-12 col-md-12 form-label">Do you listen to Bishop Dag Heward Mills Podcast?
+                  <span>
+                    <%= @treasurer.bishop_podcast ? "Yes" : "No" %>
+                  </span>
+                </label>
+              </div>
+
+                          <div class="form-group row">
+                <label class="col-12 col-md-12 form-label">When Did You Become A Treasurer? 
+                  <span>
+                    <%= @treasurer.year_treasurer.year %>
+                  </span>
+                </label>
+              </div>
+
+                          <div class="form-group row">
+                <label class="col-12 col-md-12 form-label">Treasurer type:
+                  <span>
+                    <%= Treasurer::TREASURER_TYPE.key(@treasurer.treasurer_type) %>
+                  </span>
+                </label>
+              </div>
+					<p class="bg-danger text-white">
+						The last four questions below are completed by the Principal Treasurer only
+					</p>
+
+              <div class="form-group row">
+                <label class="col-12 col-md-12 form-label">Training Conferences Completed: 
+                  <span>
+                    <%= @treasurer.conference.join(", ") if @treasurer.conference.present? %>
+                  </span>
+                </label>
+              </div>
+
+		<div class="form-group row">
+				<label class="col-12 col-md-12 form-label">Have you been trained with the treasurer's manual as a treasurer?
+					<span>
+						<%= @treasurer.training_manual ? "Yes" : "No" %>
+					</span>
+				</label>
+			</div>
+
+             <div class="form-group row">
+                <label class="col-12 col-md-12 form-label">Do you pay tithes regularly?
+                  <span>
+                    <%= @treasurer.tithe ? "Yes" : "No" %>
+                  </span>
+                </label>
+              </div>
+
+					   <div class="form-group row">
+                <label class="col-12 col-md-12 form-label">Do you have any major financial obligations/debts; If so list...<br>
+                  <span>
+                    <%= @treasurer.debt.map{|db| Treasurer::DEBT_OBLIGATION[db.to_i]}.join(", ") if @treasurer.debt.present? %>
+                  </span>
+                </label>
+              </div>
+					
+					
+					
+                        <div class="d-flex">
+              <div class="ml-auto">
+								<%= link_to "Request More Information", verify_treasurer_path, id:"verify_btn", class:"btn bg-warning" unless current_user.treasurer? %>
+								<%= link_to "Complete Verification", verify_treasurer_path, class:"btn bg-success" if (!current_user.treasurer? && !@treasurer.verified) %>
+                <%= link_to fa_icon_tag("pencil") + ' Edit', edit_treasurer_path(@treasurer), class: 'btn btn-primary' %>
+                <%= link_to 'Back', treasurers_path, class: 'btn' unless current_user.treasurer? %>
+								<%= link_to theme_icon_tag("trash"), @treasurer, 'data-toggle': 'tooltip', title: 'Delete',
+                        data: { confirm: 'This will delete both user and treasurer information. Are you sure?' }, method: :delete, class: 'btn btn-danger' if current_user.admin? %>
+              </div>
+            </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
